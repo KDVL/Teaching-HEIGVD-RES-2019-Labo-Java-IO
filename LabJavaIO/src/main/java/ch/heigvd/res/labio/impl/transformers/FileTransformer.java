@@ -63,8 +63,6 @@ public abstract class FileTransformer implements IFileVisitor {
 
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, null, ex);
-        } finally {
-
         }
     }
 
