@@ -17,25 +17,48 @@ import java.util.logging.Logger;
  */
 public class FileNumberingFilterWriter extends FilterWriter {
 
-  private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
 
-  public FileNumberingFilterWriter(Writer out) {
-    super(out);
-  }
+    private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
+    private int n = 1;
+    private boolean carriage = false;
 
-  @Override
-  public void write(String str, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+    public FileNumberingFilterWriter(Writer out) {
+        super(out);
+    }
 
-  @Override
-  public void write(char[] cbuf, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+    @Override
+    public void write(String str, int off, int len) throws IOException {
+        for (int i = off; i < off + len; ++i) {
+            this.write(str.charAt(i));
+        }
+    }
 
-  @Override
-  public void write(int c) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+    @Override
+    public void write(char[] cbuf, int off, int len) throws IOException {
+        for (int i = off; i < off + len; ++i) {
+            this.write(cbuf[i]);
+        }
+    }
+
+
+    @Override
+    public void write(int c) throws IOException {
+
+        //if first n or carriage in last line
+        if (n == 1 || carriage && c != '\n') {
+            out.write(n + "\t");
+            ++n;
+        }
+
+        //carriage is true if c equal \r
+        carriage = c == '\r';
+
+        out.write(c);
+
+        if (!carriage && c == '\n') {
+            out.write(n + "\t");
+            ++n;
+        }
+    }
 
 }
