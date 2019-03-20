@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  *
  * @author Olivier Liechti
+ *
+ * All test passed
  */
 public class UpperCaseFilterWriterTest {
 
